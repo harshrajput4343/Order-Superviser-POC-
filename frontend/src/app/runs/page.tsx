@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { runApi, supervisorApi, type RunListItem, type Supervisor } from '@/lib/api';
-import { StatusBadge } from '../page';
+import { StatusBadge } from '@/components/ui/StatusBadge';
+
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 

@@ -130,12 +130,17 @@ function ActivityContent({ activity }: { activity: Activity }) {
     );
   }
 
-  if (activity.type === 'wake_decision') {
+    if (activity.type === 'wake_decision') {
     const decision = content.decision as string;
     return (
       <div className="text-sm">
-        <span className={`inline-block px-2 py-0.5 rounded text-xs mr-2 ${decision === 'wake' ? 'bg-accent/20 text-accent' : 'bg-muted/20 text-muted-light'
-          }`}>
+        <span
+          className={`inline-block px-2 py-0.5 rounded text-xs mr-2 font-medium ${
+            decision === 'wake'
+              ? 'bg-blue-100 text-blue-700'
+              : 'bg-slate-100 text-slate-500'
+          }`}
+        >
           {decision}
         </span>
         <span className="text-muted-light">{content.reason as string}</span>
@@ -529,14 +534,7 @@ export default function RunDetailPage({ params }: { params: Promise<{ id: string
 
   const isActive = ['running', 'sleeping', 'paused'].includes(run.status);
 
-  const statusColors: Record<string, string> = {
-    running: 'from-cyan-500/20 to-cyan-600/5',
-    sleeping: 'from-indigo-500/20 to-indigo-600/5',
-    paused: 'from-amber-500/20 to-amber-600/5',
-    completed: 'from-emerald-500/20 to-emerald-600/5',
-    terminated: 'from-red-500/20 to-red-600/5',
-  };
-
+  // Status banner uses CSS utility classes instead of hardcoded Tailwind gradient strings.
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Header */}
@@ -548,8 +546,8 @@ export default function RunDetailPage({ params }: { params: Promise<{ id: string
           <div className="flex items-center gap-3">
             <h1 className="text-2xl font-bold text-foreground font-mono">{run.order_id}</h1>
             <span className={`status-${run.status} inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium`}>
-              {run.status === 'running' && <span className="w-2 h-2 rounded-full bg-cyan-400 pulse-dot" />}
-              {run.status === 'sleeping' && <span className="w-2 h-2 rounded-full bg-indigo-400" />}
+              {run.status === 'running' && <span className="w-2 h-2 rounded-full bg-blue-500 pulse-dot" />}
+              {run.status === 'sleeping' && <span className="w-2 h-2 rounded-full bg-sky-400" />}
               {run.status}
             </span>
           </div>
@@ -563,7 +561,7 @@ export default function RunDetailPage({ params }: { params: Promise<{ id: string
       </div>
 
       {/* Status Banner */}
-      <div className={`rounded-xl bg-gradient-to-r ${statusColors[run.status] || ''} border border-border p-4`}>
+      <div className={`rounded-xl status-banner-${run.status} border p-4`}>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           <div>
             <div className="text-xs text-muted">Order Status</div>
